@@ -71,10 +71,10 @@ class StreamHandler:
             try:
                 json_data = json.loads(data)
             except json.JSONDecodeError:
-                return {'raw_data': data + CHUNK_SPLITTER}
+                return {'raw_data': msg + CHUNK_SPLITTER}
 
             if not json_data:
-                return {'raw_data': data + CHUNK_SPLITTER}
+                return {'raw_data': msg + CHUNK_SPLITTER}
 
             # 提取content和reasoning_content
             content = ""
