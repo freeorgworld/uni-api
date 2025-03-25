@@ -134,8 +134,18 @@ class StreamHandler:
                         first_token_time = int(datetime.now().timestamp() * 1000)
                         self.first_token = True
                         self.request_record.first_token_rt = first_token_time - self.request_start_time
-
-                    buffer += chunk
+                        
+                    # 硅基流动的似乎有编码问题
+                    if self.url.startswith("https://api.siliconflow.cn"):
+                        try:  
+                            decoded_chunk = chunk.decode('utf-8')  
+                            buffer += decoded_chunk  
+                        except UnicodeDecodeError as e:  
+                            # 解码失败，可以根据实际情况选择处理方式  
+                            logger.error(f"解码失败,{str(e)}", exc_info=True)
+                            buffer += chunk #兼容方案，忽略错误  
+                    else:
+                        buffer += chunk
 
                     # 解析并提取内容
                     while CHUNK_SPLITTER in buffer:
