@@ -234,7 +234,7 @@ class StreamHandler:
         """异步生成小块内容"""
         # 初始化变量
         ideal_speed = 50  # 初始速率
-        max_speed = 120
+        max_speed = 500
         last_output_time = time.time()
         min_chars_for_speed = 20  # 至少收集20个字符后再计算速度
         bucket = TokenBucket(rate=ideal_speed, capacity=max_speed)
